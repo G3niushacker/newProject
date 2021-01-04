@@ -5,6 +5,8 @@ import 'package:food_delivery_app/resturant_app/views/signup/components/personal
 import 'package:food_delivery_app/resturant_app/views/signup/components/personal_sceent_dropdown.dart';
 import 'package:provider/provider.dart';
 import 'package:food_delivery_app/routes/routes_names.dart';
+import 'package:food_delivery_app/delivery_boy_app/views/signup/components/drop_down_list.dart';
+
 
 class DeliBoyInfo extends StatelessWidget {
   @override
@@ -25,17 +27,23 @@ class DeliBoyInfo extends StatelessWidget {
                 PersonalInputs(
                   hintText: 'First Name',
                   keyBordType: TextInputType.text,
-                  onTap: (val){},
+                  onTap: (val){
+                    prov.firstName = val;
+                  },
                 ),
                 PersonalInputs(
                   hintText: 'Family Name',
                   keyBordType: TextInputType.text,
-                  onTap: (val){},
+                  onTap: (val){
+                    prov.familyName = val;
+                  },
                 ),
                 PersonalInputs(
                   hintText: 'Phone Number',
                   keyBordType: TextInputType.number,
-                  onTap: (val){},
+                  onTap: (val){
+                    prov.phone = val;
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -47,7 +55,9 @@ class DeliBoyInfo extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextField(
-                      onChanged: (val){},
+                      onChanged: (val){
+                        prov.buildNo = val;
+                      },
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         labelText: 'Building No',
@@ -60,7 +70,9 @@ class DeliBoyInfo extends StatelessWidget {
                   SizedBox(width: 10,),
                   Expanded(
                     child: TextField(
-                      onChanged: (val){},
+                      onChanged: (val){
+                        prov.unit = val;
+                      },
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         labelText: 'Unit',
@@ -76,7 +88,9 @@ class DeliBoyInfo extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
-                    onChanged: (val){},
+                    onChanged: (val){
+                      prov.streetAdd = val;
+                    },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Street Address',
@@ -92,7 +106,9 @@ class DeliBoyInfo extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextField(
-                          onChanged: (val){},
+                          onChanged: (val){
+                            prov.city = val;
+                          },
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             labelText: 'City',
@@ -105,7 +121,9 @@ class DeliBoyInfo extends StatelessWidget {
                       SizedBox(width: 10,),
                       Expanded(
                         child: TextField(
-                          onChanged: (val){},
+                          onChanged: (val){
+                            prov.zipCode = val;
+                          },
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: 'Zip Code',
@@ -121,7 +139,9 @@ class DeliBoyInfo extends StatelessWidget {
                 PersonalInputs(
                   hintText: 'ID Iqama Number',
                   keyBordType: TextInputType.number,
-                  onTap: (val){},
+                  onTap: (val){
+                    prov.iqamaNo = val;
+                  },
                 ),
                 SizedBox(height: 10,),
                 Row(
@@ -155,7 +175,28 @@ class DeliBoyInfo extends StatelessWidget {
                 ),
                 DropDownMenue(
                   title: 'City',
-                  items: prov.getCountryList(),
+                  items: [
+                    DropdownMenuItem(
+                      child: Text("Saudi Arabia"),
+                      value: 'Saudi Arabia',
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Pakistan"),
+                      value: 'Pakistan',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('India'),
+                      value: 'India',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Bangladesh'),
+                      value: 'Bangladesh',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Afghanistan'),
+                      value: 'Afghanistan',
+                    ),
+                  ],
                   onchanged: (val){
                     prov.setCountryVal(val);
                   },

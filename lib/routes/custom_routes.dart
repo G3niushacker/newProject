@@ -31,6 +31,10 @@ import 'package:food_delivery_app/resturant_app/views/home/resturant_home.dart';
 import 'package:food_delivery_app/delivery_boy_app/views/signup/deli_boy_info.dart';
 import 'package:food_delivery_app/delivery_boy_app/views/signup/deli_boy_documents.dart';
 import 'package:food_delivery_app/delivery_boy_app/views/home_page/map_screen.dart';
+import 'package:food_delivery_app/resturant_app/views/home/menu/items_page.dart';
+import 'package:food_delivery_app/customer_app/views/home/resturants/resturant_details.dart';
+import 'package:food_delivery_app/customer_app/views/cart_page/cart_page.dart';
+
 
 
 class CustomRoutes {
@@ -82,6 +86,12 @@ class CustomRoutes {
         return MaterialPageRoute(builder: (_) => Wallet());
       case allTransactions:
         return MaterialPageRoute(builder: (_) => AllTransactions());
+      case resturantsPage:
+        return MaterialPageRoute(builder: (_) => Resturants());
+      case resturantDetailsPage:
+        return MaterialPageRoute(builder: (_) => ResturantsDetails());
+      case cartPage:
+        return MaterialPageRoute(builder: (_) => CartPage());
 
       // resturnat routes
       case resturantGeneralInfo:
@@ -90,8 +100,8 @@ class CustomRoutes {
         return MaterialPageRoute(builder: (_) => ResturantPersonalInfo());
       case resturantHome:
         return MaterialPageRoute(builder: (_) => ResturantHomePage());
-      case resturantsPage:
-        return MaterialPageRoute(builder: (_) => Resturants());
+      case itemsPage:
+        return MaterialPageRoute(builder: (_) => ItemsPage());
 
         // delivery boy routes
       case deliBoyInfo:

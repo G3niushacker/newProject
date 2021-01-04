@@ -6,9 +6,9 @@ class ResturantsModel{
   dynamic ratingLength;
   dynamic description;
   dynamic minimum;
-  dynamic startFrom;
+  dynamic deliFee;
 
   ResturantsModel({this.id,this.bName,this.resturantSelfie,
     this.rating,this.ratingLength,
-    this.description,this.minimum,this.startFrom});
+    this.description,this.minimum,this.deliFee});
 }

@@ -4,11 +4,10 @@ import 'package:food_delivery_app/resturant_app/views/home/resturant_home.dart';
 import 'package:food_delivery_app/resturant_app/views/signup/components/personal_inputs.dart';
 import 'package:food_delivery_app/resturant_app/views/signup/components/personal_radio_buttons.dart';
 import 'package:food_delivery_app/resturant_app/views/signup/components/personal_sceent_dropdown.dart';
-import 'package:provider/provider.dart';
 import 'package:food_delivery_app/resturant_app/model/resturant_profile_provider.dart';
+import 'package:provider/provider.dart';
 
 class ResturantPersonalInfo extends StatelessWidget {
-  @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ResturantProfileProvider>(context);
     return Scaffold(
@@ -16,7 +15,7 @@ class ResturantPersonalInfo extends StatelessWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding:
-            const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -31,7 +30,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   hintText: "Business Name",
                   keyBordType: TextInputType.name,
                   onTap: (val) {
-                    provider.businessName = val;
+                    provider.setBusinessName(val);
                   },
                 ),
                 DropDownMenue(
@@ -39,7 +38,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   items: provider.getProviderList(),
                   value: provider.providerValue,
                   onchanged: (val) {
-                    provider.setproviderValue(val);
+                      provider.setproviderValue(val);
                   },
                 ),
                 DropDownMenue(
@@ -51,7 +50,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   },
                 ),
                 DropDownMenue(
-                  title: "Cuisine",
+                  title: 'Cuisine',
                   items: provider.getCuisineList(),
                   onchanged: (val) {
                     provider.setCuisine(val);
@@ -62,7 +61,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   hintText: "City",
                   keyBordType: TextInputType.text,
                   onTap: (val) {
-                    provider.city = val;
+                    provider.setCity(val);
                   },
                 ),
                 SizedBox(
@@ -72,7 +71,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   hintText: "Business Address",
                   keyBordType: TextInputType.streetAddress,
                   onTap: (val) {
-                    provider.businessAddress = val;
+                    provider.setbusinessAddress(val);
                   },
                 ),
                 SizedBox(
@@ -82,7 +81,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   hintText: "First Name",
                   keyBordType: TextInputType.name,
                   onTap: (val) {
-                    provider.firstName = val;
+                    provider.setfirstName(val);
                   },
                 ),
                 SizedBox(
@@ -92,7 +91,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   hintText: "Last Name",
                   keyBordType: TextInputType.name,
                   onTap: (val) {
-                    provider.lastName = val;
+                    provider.setLastName(val);
                   },
                 ),
                 SizedBox(
@@ -102,7 +101,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   hintText: "Contact Number",
                   keyBordType: TextInputType.number,
                   onTap: (val) {
-                    provider.contact = val;
+                    provider.setContact(val);
                   },
                 ),
                 SizedBox(
@@ -112,7 +111,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   hintText: "Email",
                   keyBordType: TextInputType.emailAddress,
                   onTap: (val) {
-                    provider.email = val;
+                    provider.setEmail(val);
                   },
                 ),
                 SizedBox(
@@ -122,7 +121,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   hintText: "Commercial Registration",
                   keyBordType: TextInputType.text,
                   onTap: (val) {
-                    provider.commercialReg = val;
+                    provider.setCommReg(val);
                   },
                 ),
                 SizedBox(
@@ -132,7 +131,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   hintText: "Number of branches",
                   keyBordType: TextInputType.number,
                   onTap: (val) {
-                    provider.noOfBranches = val;
+                    provider.setNoOfBran(val);
                   },
                 ),
                 SizedBox(
@@ -147,7 +146,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                     provider.doYouHaveFranchiseValueChange(val);
                   },
                   radio2ValueOnChange: (val) {
-                    provider.doYouHaveFranchiseValueChange(val);
+                      provider.doYouHaveFranchiseValueChange(val);
                   },
                 ),
                 PersonalRadioButtons(
@@ -156,7 +155,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   radio1Value: 0,
                   radio2Value: 1,
                   radio1ValueOnChange: (val) {
-                    provider.doYouHaveDeliveryServiceValueChange(val);
+                      provider.doYouHaveDeliveryServiceValueChange(val);
                   },
                   radio2ValueOnChange: (val) {
                     provider.doYouHaveDeliveryServiceValueChange(val);
@@ -168,7 +167,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   radio1Value: 0,
                   radio2Value: 1,
                   radio1ValueOnChange: (val) {
-                    provider.doYouHaveOtherApplicationsValueChange(val);
+                      provider.doYouHaveOtherApplicationsValueChange(val);
                   },
                   radio2ValueOnChange: (val) {
                     provider.doYouHaveOtherApplicationsValueChange(val);
@@ -197,7 +196,6 @@ class ResturantPersonalInfo extends StatelessWidget {
                   color: kThemeColor,
                   minWidth: MediaQuery.of(context).size.width,
                   onPressed: () {
-                    print(provider.lastName);
                     provider.uploadResturantInfo(context);
                   },
                   child: Text(

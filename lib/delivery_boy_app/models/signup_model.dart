@@ -6,8 +6,23 @@ import 'package:food_delivery_app/constants.dart';
 import 'package:hijri_picker/hijri_picker.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class DeliSignUpModel extends ChangeNotifier{
+
+  String firstName;
+  String familyName;
+  String phone;
+  String buildNo;
+  String unit;
+  String streetAdd;
+  String city;
+  String zipCode;
+  String iqamaNo;
+
+
+
   DateTime dateTime = DateTime.now();
   Future<void> selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -23,11 +38,11 @@ class DeliSignUpModel extends ChangeNotifier{
 
   var selectedDate = HijriCalendar.now();
   Future<Null> selectIslamicDate(BuildContext context) async {
+    final local = Locale('ar', 'SA');
     HijriCalendar.setLocal(Localizations.localeOf(context).languageCode);
     final HijriCalendar picked = await showHijriDatePicker(
       context: context,
       initialDate: selectedDate,
-
       lastDate:  HijriCalendar()
         ..hYear = 1445
         ..hMonth = 9
@@ -44,22 +59,22 @@ class DeliSignUpModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  File selfie;
+  File mySelfie;
   File idFront;
   File idBack;
   File licence;
-  File vahicleDoc;
+  File vahicleDocom;
 
   Future pickSelfieImage() async {
     var sampleImage = await ImagePicker.pickImage(source: ImageSource.gallery);
-    selfie = sampleImage;
+    mySelfie = sampleImage;
     notifyListeners();
   }
 
   Widget showSelfieImage() {
-    if (selfie != null) {
+    if (mySelfie != null) {
       return Image.file(
-        selfie,
+        mySelfie,
         fit: BoxFit.fill,
         // height: 120,
         // width: 120,
@@ -168,14 +183,14 @@ class DeliSignUpModel extends ChangeNotifier{
 
   Future pickVahicleDoc() async {
     var sampleImage = await ImagePicker.pickImage(source: ImageSource.gallery);
-    selfie = sampleImage;
+    vahicleDocom = sampleImage;
     notifyListeners();
   }
 
   Widget showVahicleImage() {
-    if (selfie != null) {
+    if (vahicleDocom != null) {
       return Image.file(
-        selfie,
+        vahicleDocom,
         fit: BoxFit.fill,
         // height: 120,
         // width: 120,
@@ -195,20 +210,7 @@ class DeliSignUpModel extends ChangeNotifier{
     }
   }
 
-  String cityVal = "--select city--";
-  List<DropdownMenuItem> getCityList() {
-    List<DropdownMenuItem<String>> list = [];
-    for (var i = 0; i < dropDownCity.length; i++) {
-      String city = dropDownCity[i];
-      var newList = DropdownMenuItem(
-        child: Text(city),
-        value: city,
-      );
-      list.add(newList);
-    }
-    return list;
-  }
-  String countryVal = "--select country--";
+  String countryVal = 'Saudi Arabia';
   List<DropdownMenuItem> getCountryList() {
     List<DropdownMenuItem<String>> list = [];
     for (var i = 0; i < dropDownCountry.length; i++) {
@@ -222,12 +224,44 @@ class DeliSignUpModel extends ChangeNotifier{
     return list;
   }
 
-  void setCityVal(String val){
-    cityVal = val;
-    notifyListeners();
-  }
   void setCountryVal(String val){
     countryVal = val;
     notifyListeners();
+  }
+
+
+  void uploadDeliBoyInfo() async {
+    String url = '${kServerUrlName}delivery_boy_info.php';
+    var request = http.MultipartRequest('POST',Uri.parse(url));
+
+    var selfie = await http.MultipartFile.fromPath('my_selfie', mySelfie.path);
+    var drivingLic = await http.MultipartFile.fromPath('driving_license_img', licence.path);
+    var idFrontt = await http.MultipartFile.fromPath('id_front', idFront.path);
+    var idBackk = await http.MultipartFile.fromPath('id_back', idBack.path);
+    var vahicleDoc = await http.MultipartFile.fromPath('vehicle_doc', vahicleDocom.path);
+
+    request.fields['login_id'] = '20';
+    request.fields['first_name'] = firstName;
+    request.fields['family_name'] = familyName;
+    request.fields['phone_number'] = phone;
+    request.fields['bulding_no'] = buildNo;
+    request.fields['unit'] = unit;
+    request.fields['street_address'] = streetAdd;
+    request.fields['city'] = city;
+    request.fields['zipcode'] = zipCode;
+    request.fields['country'] = countryVal ?? 'Saudi Arabia';
+    request.fields['id_iqama_no'] = iqamaNo;
+    request.fields['iqama_ex_date_en'] = "${dateTime.toLocal()}".split(' ')[0];
+    request.fields['iqama_ex_date_ar'] = selectedDate.toString();
+
+    request.files.add(selfie);
+    request.files.add(drivingLic);
+    request.files.add(idFrontt);
+    request.files.add(idBackk);
+    request.files.add(vahicleDoc);
+    http.StreamedResponse response = await request.send();
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+    });
   }
 }

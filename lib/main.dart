@@ -128,7 +128,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         onGenerateRoute: CustomRoutes.allRoutes,
-        initialRoute: deliHome,
+        initialRoute: navigationBar,
       ),
     );
   }

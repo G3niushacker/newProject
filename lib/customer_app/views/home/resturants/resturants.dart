@@ -4,6 +4,8 @@ import 'components/resturant_card.dart';
 import 'package:provider/provider.dart';
 import 'package:food_delivery_app/customer_app/model/resturant/resturants_providers.dart';
 import 'package:food_delivery_app/customer_app/model/resturant/resturant_list.dart';
+import 'package:food_delivery_app/routes/routes_names.dart';
+
 
 class Resturants extends StatefulWidget {
   @override
@@ -12,15 +14,16 @@ class Resturants extends StatefulWidget {
 
 class _ResturantsState extends State<Resturants> {
 
-
   @override
   void initState() {
     super.initState();
-
+    final pro = Provider.of<NearResturantsProvider>(context,listen: false);
+    pro.fetchNearbyResturants(context);
   }
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<ResturantList>(context);
+    final pr = Provider.of<NearResturantsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -117,31 +120,30 @@ class _ResturantsState extends State<Resturants> {
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: prov.resturantList.length,
                     itemBuilder: (ctx,i){
-                      return ResturantCard(
-                        title: prov.resturantList[i].bName,
-                        image: "https://tripps.live/tripp_food/${prov.resturantList[i].resturantSelfie}",
-                        deleveryFee: prov.resturantList[i].minimum,
-                        minRate: prov.resturantList[i].startFrom,
-                        subtitle: prov.resturantList[i].description,
-                      );
+                      if(prov.resturantList.isEmpty){
+                        return Center(child: CircularProgressIndicator(),);
+                      }else{
+                        return InkWell(
+                          onTap: (){
+                            pr.resturantId = prov.resturantList[i].id;
+                            pr.fetchResturantInfo();
+                            pr.fetchMenuCards(context);
+                            print(prov.resturantList[i].id);
+                            Future.delayed(Duration(seconds: 2), () {
+                              Navigator.pushNamed(context, resturantDetailsPage);
+                            });
+                          },
+                          child: ResturantCard(
+                            title: prov.resturantList[i].bName,
+                            image: "https://tripps.live/tripp_food/${prov.resturantList[i].resturantSelfie}",
+                            deleveryFee: prov.resturantList[i].minimum,
+                            minRate: prov.resturantList[i].deliFee,
+                            subtitle: prov.resturantList[i].description,
+                          ),
+                        );
+                      }
                     },
                   ),
-                  // ResturantCard(
-                  //   title: "Arabic Resturant",
-                  //   subtitle:
-                  //       "Camel Korma, Meat korma, Kabaab, salad , suit pasti, naaan",
-                  //   image: "images/arabicRest.jpg",
-                  //   minRate: "99",
-                  //   deleveryFee: "50",
-                  // ),
-                  // ResturantCard(
-                  //   title: "Safari Resturant",
-                  //   subtitle:
-                  //       "Camel Korma, Meat korma, Kabaab, salad , suit pasti, naaan",
-                  //   image: "images/safariRest.jpg",
-                  //   minRate: "80",
-                  //   deleveryFee: "100",
-                  // ),
                   // ResturantCard(
                   //   title: "Fast Food",
                   //   subtitle:

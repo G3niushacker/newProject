@@ -24,7 +24,7 @@ class DeliBoyDocuments extends StatelessWidget {
                       provider.pickSelfieImage();
                     },
                     colour: kThemeColor,
-                    cardChild: provider.selfie == null
+                    cardChild: provider.mySelfie == null
                         ? IconContent(
                       icon: Icons.camera_alt,
                       gender: "Your Selfie",
@@ -41,7 +41,7 @@ class DeliBoyDocuments extends StatelessWidget {
                     cardChild: provider.licence == null
                         ? IconContent(
                       icon: Icons.camera_alt,
-                      gender: "Your Licence",
+                      gender: "Driving Licence",
                     )
                         : provider.showLicenceImage(),
                   ),
@@ -92,7 +92,7 @@ class DeliBoyDocuments extends StatelessWidget {
                       provider.pickVahicleDoc();
                     },
                     colour: kThemeColor,
-                    cardChild: provider.vahicleDoc == null
+                    cardChild: provider.vahicleDocom == null
                         ? IconContent(
                       icon: Icons.camera_alt,
                       gender: "Vehicle Documents",
@@ -113,6 +113,7 @@ class DeliBoyDocuments extends StatelessWidget {
               color: kThemeColor,
               minWidth: MediaQuery.of(context).size.width,
               onPressed: (){
+                provider.uploadDeliBoyInfo();
                 // Navigator.pushNamed(context, deliDocuments);
               },
               child: Text("Next",

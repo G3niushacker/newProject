@@ -3,6 +3,7 @@ import 'package:food_delivery_app/localization/demo_localization.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 
 const String kServerUrlName = "https://tripps.live/tripp_food/API/";
+const String kImageUrlEnd = "https://tripps.live/tripp_food/";
 
 String kGetTranslated(BuildContext context, String key){
     return DemoLocalization.of(context).getTranslatedValue(key);

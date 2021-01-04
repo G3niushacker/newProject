@@ -23,11 +23,10 @@ class ResturantHomePage extends StatefulWidget {
 }
 
 class _ResturantHomePageState extends State<ResturantHomePage> {
-
   @override
   void initState() {
     super.initState();
-    final prov = Provider.of<ResturantProfileProvider>(context,listen: false);
+    final prov = Provider.of<ResturantProfileProvider>(context, listen: false);
     prov.fetchResturantProfile();
   }
 
@@ -53,15 +52,14 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                         height: 30,
                       ),
                       ClipOval(
-                        child: provider.profileImage ==
-                                null
+                        child: provider.profileImage == null
                             ? Image.asset(
                                 "images/user.png",
                                 height: 90,
                                 width: 90,
                               )
                             : Image.network(
-                          'https://tripps.live/tripp_food/${provider.profileImage}',
+                                'https://tripps.live/tripp_food/${provider.profileImage}',
                                 height: 80,
                                 width: 80,
                                 fit: BoxFit.fill,
@@ -161,9 +159,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
               trailing: Icon(Icons.arrow_forward_ios),
             ),
             FlatButton(
-              onPressed: () {
-
-              },
+              onPressed: () {},
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -182,7 +178,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               menuProvider.fetchMenuCards(context);
               Navigator.push(
                 context,

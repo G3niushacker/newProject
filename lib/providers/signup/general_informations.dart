@@ -66,9 +66,9 @@ class _ResturantGeneralInfoState extends State<ResturantGeneralInfo> {
                         colour: kThemeColor,
                         cardChild: provider.selfieImage == null
                             ? IconContent(
-                          icon: Icons.camera_alt,
-                          gender: "Your Selfie",
-                        )
+                                icon: Icons.camera_alt,
+                                gender: "Your Selfie",
+                              )
                             : provider.showSelfieImage(),
                       ),
                     ),
@@ -80,9 +80,9 @@ class _ResturantGeneralInfoState extends State<ResturantGeneralInfo> {
                         colour: kThemeColor,
                         cardChild: provider.resturantImage == null
                             ? IconContent(
-                          icon: Icons.camera_alt,
-                          gender: "Resturant Selfie",
-                        )
+                                icon: Icons.camera_alt,
+                                gender: "Resturant Selfie",
+                              )
                             : provider.showResturantImage(),
                       ),
                     ),
@@ -100,9 +100,9 @@ class _ResturantGeneralInfoState extends State<ResturantGeneralInfo> {
                         colour: kThemeColor,
                         cardChild: provider.cnicFront == null
                             ? IconContent(
-                          icon: Icons.camera_alt,
-                          gender: "CNIC Front",
-                        )
+                                icon: Icons.camera_alt,
+                                gender: "CNIC Front",
+                              )
                             : provider.showCnicFonrtImage(),
                       ),
                     ),
@@ -114,9 +114,9 @@ class _ResturantGeneralInfoState extends State<ResturantGeneralInfo> {
                         colour: kThemeColor,
                         cardChild: provider.cnicBack == null
                             ? IconContent(
-                          icon: Icons.camera_alt,
-                          gender: "CNIC Back",
-                        )
+                                icon: Icons.camera_alt,
+                                gender: "CNIC Back",
+                              )
                             : provider.showCnicBackImage(),
                       ),
                     ),
@@ -132,7 +132,7 @@ class _ResturantGeneralInfoState extends State<ResturantGeneralInfo> {
                 ),
                 height: 50,
                 onPressed: () {
-                  Navigator.pushNamed(context, resturantPersonalInfo);
+                 Navigator.pushNamed(context, resturantPersonalInfo);
                 },
                 color: kThemeColor,
                 child: Text(

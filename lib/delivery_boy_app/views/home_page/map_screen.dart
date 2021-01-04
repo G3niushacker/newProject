@@ -19,12 +19,11 @@ class _DeliMapScreenState extends State<DeliMapScreen> {
   static LatLng latLng;
   void getLatLong(BuildContext context){
     final prov = Provider.of<DeliMapModel>(context,listen: false);
-    print(prov.getlon);
+    print(latLng.longitude);
     setState(() {
       latLng =  LatLng(prov.getlat,prov.getlon);
     });
   }
-
 
   LatLng initPostition = latLng;
 

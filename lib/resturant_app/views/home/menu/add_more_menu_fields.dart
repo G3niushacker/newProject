@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/constants.dart';
+import 'package:food_delivery_app/resturant_app/model/menu_list.dart';
+import 'package:food_delivery_app/resturant_app/model/resturant_menu_provider.dart';
 import 'package:food_delivery_app/resturant_app/views/home/menu/components/add_menu_inputs.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class AddMoreMenuFields extends StatefulWidget {
   @override
@@ -11,39 +14,10 @@ class AddMoreMenuFields extends StatefulWidget {
 }
 
 class _AddMoreMenuFieldsState extends State<AddMoreMenuFields> {
-  File itmImage;
-  Future pickSelfieImage() async {
-    var sampleImage = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      itmImage = sampleImage;
-    });
-  }
-
-  Widget showSelfieImage() {
-    if (itmImage != null) {
-      return Image.file(
-        itmImage,
-        fit: BoxFit.fill,
-        // height: 120,
-        // width: 120,
-      );
-    } else {
-      return Center(
-        child: Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: kThemeColor, width: 5)),
-            child: Image.asset(
-              "images/profile.png",
-              height: 120,
-              width: 120,
-            )),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MenuProvider>(context);
+    final listPr = Provider.of<MenuLists>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Add More Menu Offers"),
@@ -72,13 +46,17 @@ class _AddMoreMenuFieldsState extends State<AddMoreMenuFields> {
                   Expanded(
                     child: AddMenuInputs(
                       hintText: "e.g Pizza",
-                      onTap: (val) {},
+                      onTap: (val) {
+                        provider.itemName = val;
+                      },
                     ),
                   ),
                   Expanded(
                     child: AddMenuInputs(
                       hintText: "SR 100",
-                      onTap: (val) {},
+                      onTap: (val) {
+                        provider.itemPrice = val;
+                      },
                     ),
                   ),
                 ],
@@ -99,6 +77,9 @@ class _AddMoreMenuFieldsState extends State<AddMoreMenuFields> {
                       hintText: "Type something about item",
                       border: InputBorder.none,
                     ),
+                    onChanged: (val){
+                      provider.itemDescription = val;
+                    },
                   ),
                 ),
               ),
@@ -114,22 +95,26 @@ class _AddMoreMenuFieldsState extends State<AddMoreMenuFields> {
                   horizontal: 30,
                   vertical: 20,
                 ),
-                child: itmImage == null
+                child: provider.itemImage == null
                     ? OutlineButton(
                         onPressed: () {
-                          pickSelfieImage();
+                          provider.pickItemImage();
                         },
                         child: Text("Chose a photo"),
                       )
                     : Container(
                         height: 200,
-                        child: showSelfieImage(),
+                        child: provider.showItemImage(),
                       ),
               ),
               MaterialButton(
                 color: kThemeColor,
                 height: 40,
-                onPressed: () {
+                onPressed: () async {
+                  provider.addCardItems();
+                  listPr.clearAllList();
+                  provider.fetchMenuCards(context);
+                   await Future.delayed(Duration(seconds: 2));
                   Navigator.pop(context);
                 },
                 child: Text(

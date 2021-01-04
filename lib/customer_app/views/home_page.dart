@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/constants.dart';
 import 'package:food_delivery_app/customer_app/components/welcome_page.dart';
-import 'package:food_delivery_app/customer_app/services/location_service.dart';
 import 'package:food_delivery_app/customer_app/views/home/map_screen.dart';
-import 'package:food_delivery_app/localization/demo_localization.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
-import 'home/resturants/resturants.dart';
 import 'package:food_delivery_app/routes/routes_names.dart';
 import 'package:food_delivery_app/customer_app/model/resturant/resturants_providers.dart';
+
 
 class HOmePage extends StatefulWidget {
   @override
@@ -16,19 +13,6 @@ class HOmePage extends StatefulWidget {
 }
 
 class _HOmePageState extends State<HOmePage> {
-  double latitud;
-  double longitud;
-
-  getLatLong(BuildContext context) async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      latitud = position.latitude;
-      longitud = position.longitude;
-    });
-  }
-
-
   @override
   void initState() {
     super.initState();
@@ -49,7 +33,7 @@ class _HOmePageState extends State<HOmePage> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => MapScreen()));
             },
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -62,16 +46,16 @@ class _HOmePageState extends State<HOmePage> {
               ontap: () {
                 final pro = Provider.of<NearResturantsProvider>(context,listen: false);
                 pro.fetchNearbyResturants(context);
-                Navigator.pushNamed(context, resturantsPage);
+                Future.delayed(Duration(seconds: 1), () {
+                  Navigator.pushNamed(context, resturants);
+                });
               },
             ),
             WelcomePage(
               image: "images/markeet.jpg",
               buttonTitle: "${kGetTranslated(context, 'find_markeets')}",
               ontap: () {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
                   Navigator.of(context).pushNamed('markeets');
-                });
               },
             ),
           ],
@@ -81,6 +65,3 @@ class _HOmePageState extends State<HOmePage> {
   }
 }
 
-void markeetsNavigate(BuildContext context) {
-  Navigator.pushNamed(context, 'markeets');
-}

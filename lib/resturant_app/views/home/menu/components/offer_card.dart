@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/constants.dart';
 import 'package:food_delivery_app/resturant_app/views/home/menu/add_more_menu_fields.dart';
 import 'package:food_delivery_app/resturant_app/views/home/menu/edit_menu_items.dart';
+import 'package:food_delivery_app/resturant_app/model/menu_card_item_model.dart';
 
 class OfferCard extends StatelessWidget {
   final String title;
   final String price;
-  final List<Widget> children;
-  final Function delet;
-  final Function edit;
-  OfferCard({this.children, this.price, this.title,this.delet,this.edit});
+  final Function addItems;
+  final List<MenuCardItemsModel> children;
+  OfferCard({this.children, this.price, this.title,this.addItems});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -30,13 +30,24 @@ class OfferCard extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: edit,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditMenuItem(),
+                      ),
+                    );
+                  },
                   icon: Icon(Icons.edit),
                 )
               ],
             ),
-            Column(
-              children: children,
+            ListView.builder(
+              itemCount: children != null && children.length > 0 ? children.length : 0,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return _buildItem(children[index]);
+              },
             ),
             SizedBox(
               height: 30,
@@ -47,26 +58,27 @@ class OfferCard extends StatelessWidget {
                 Expanded(
                   child: OutlineButton(
                     highlightedBorderColor: kThemeColor,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddMoreMenuFields(),
-                        ),
-                      );
-                    },
+                    onPressed: addItems,
                     child: Text("Add More"),
                   ),
                 ),
                 IconButton(
                   icon: Icon(Icons.delete),
-                  onPressed: delet,
+                  onPressed: () {},
                 )
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  _buildItem(MenuCardItemsModel item) {
+    return ListTile(
+      leading: Image.network("https://tripps.live/tripp_food/${item.itemImage}"),
+      title: Text(item.itemName),
+      subtitle: Text(item.itemDescription),
     );
   }
 }

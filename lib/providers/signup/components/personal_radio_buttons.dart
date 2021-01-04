@@ -9,11 +9,11 @@ class PersonalRadioButtons extends StatelessWidget {
   final Function radio2ValueOnChange;
   PersonalRadioButtons(
       {this.radio1Value,
-        this.radio1ValueOnChange,
-        this.radio2Value,
-        this.radio2ValueOnChange,
-        this.title,
-        this.grupValue});
+      this.radio1ValueOnChange,
+      this.radio2Value,
+      this.radio2ValueOnChange,
+      this.title,
+      this.grupValue});
   @override
   Widget build(BuildContext context) {
     return Card(
