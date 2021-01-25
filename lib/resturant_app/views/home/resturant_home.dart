@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/common_screens/sign_up_welcome_screen.dart';
 import 'package:food_delivery_app/resturant_app/views/home/components/circular_indicator.dart';
 import 'package:food_delivery_app/resturant_app/views/home/menu/menu_page.dart';
 import 'package:food_delivery_app/resturant_app/views/recent_orders.dart';
 import 'package:food_delivery_app/resturant_app/views/wallet/wallet.dart';
 import 'package:food_delivery_app/resturant_app/views/contact_us.dart';
-import 'package:food_delivery_app/resturant_app/views/how_it_work.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery_app/resturant_app/views/signup/personal_information.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food_delivery_app/resturant_app/services/firebase_user_id.dart';
 import 'package:provider/provider.dart';
 import 'package:food_delivery_app/resturant_app/model/resturant_profile_provider.dart';
 import 'package:food_delivery_app/resturant_app/model/resturant_menu_provider.dart';

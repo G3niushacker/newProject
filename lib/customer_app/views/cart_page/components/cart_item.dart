@@ -9,6 +9,47 @@ class CartItem extends StatelessWidget {
   CartItem({this.price,this.title,this.image,this.subtitle,this.qty});
   @override
   Widget build(BuildContext context) {
+    return card();
+  }
+  Widget list (){
+    return ListTile(
+      title: Text(title),
+      subtitle: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          InkWell(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100)
+              ),
+              elevation: 3.0,
+              child: Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Icon(AntDesign.minus,size: 15,),
+              ),
+            ),
+          ),
+          SizedBox(width: 10,),
+          Text("${qty}x"),
+          SizedBox(width: 10,),
+          InkWell(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+              elevation: 3.0,
+              child: Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Icon(AntDesign.plus,size: 15),
+              ),
+            ),
+          ),
+        ],
+      ),
+      trailing: Text("$price SAR",style: TextStyle(color: Colors.grey),),
+    );
+  }
+  Widget card(){
     return Container(
       height: 80,
       child: Row(
@@ -17,7 +58,7 @@ class CartItem extends StatelessWidget {
           Column(
             children: [
               Container(
-                child: Image.asset(image,height: 80,),
+                child: Image.network(image,height: 60,width: 80,fit: BoxFit.fill,),
               ),
             ],
           ),
@@ -56,7 +97,7 @@ class CartItem extends StatelessWidget {
                       InkWell(
                         child: Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
+                            borderRadius: BorderRadius.circular(100),
                           ),
                           elevation: 3.0,
                           child: Padding(
@@ -77,7 +118,7 @@ class CartItem extends StatelessWidget {
             children: [
               Text("$price SAR",style: TextStyle(color: Colors.grey),)
             ],
-          )
+          ),
         ],
       ),
     );

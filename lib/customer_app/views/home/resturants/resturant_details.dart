@@ -25,14 +25,25 @@ class ResturantsDetails extends StatelessWidget {
               floating: true,
               pinned: true,
               expandedHeight: 200,
-              leading: IconButton(
-                onPressed: () async {
-                  Navigator.pop(context);
-                  await Future.delayed(Duration(seconds: 2));
-                  pr.clearRestInfo();
-                  pr.clearAllCardNItm();
-                },
-                icon: Icon(Icons.arrow_back),
+              leading: Row(
+                children: [
+                  SizedBox(width: 10,),
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Colors.white,
+                    child: Center(
+                      child: IconButton(
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          await Future.delayed(Duration(seconds: 2));
+                          pr.clearRestInfo();
+                          pr.clearAllCardNItm();
+                        },
+                        icon: Icon(Icons.arrow_back),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
@@ -80,7 +91,7 @@ class ResturantsDetails extends StatelessWidget {
                   height: 0,
                   width: 0,
                 ),
-                Text("Check Out"),
+                Text("Go to cart"),
                 CircleAvatar(
                   radius: 13,
                   backgroundColor: Colors.white,

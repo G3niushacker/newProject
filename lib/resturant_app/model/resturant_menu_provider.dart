@@ -59,12 +59,13 @@ class MenuProvider extends ChangeNotifier {
     String url = "${kServerUrlName}resturant_card.php";
     http.Response response = await http.post(url,
         body: ({
-          'email': 'azamdirectors@gmail.com',
-          'login_id': '20',
+          'email': 'business@email.com',
+          'login_id': '9',
           'card_name': cardName,
           'min_price': cardMinPrice,
         }));
     var decode = jsonDecode(response.body);
+    notifyListeners();
   }
 
   void callFetchFun(context) {
@@ -92,7 +93,7 @@ class MenuProvider extends ChangeNotifier {
     String url = "${kServerUrlName}fetch_resturant_card.php";
     http.Response response = await http.post(url,
         body: ({
-          'resturant_id': '20',
+          'resturant_id': '9',
         }));
     var decodee = jsonDecode(response.body);
     List<MenuCardItemsModel> lstItems;

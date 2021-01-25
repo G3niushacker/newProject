@@ -2,11 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/constants.dart';
 import 'package:food_delivery_app/common_clip_paths/signup_uper_clip.dart';
 import 'package:food_delivery_app/models/sign_up_model.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 
 GlobalKey<FormState> _key = GlobalKey<FormState>();
 
-class EmailSignUp extends StatelessWidget {
+class EmailSignUp extends StatefulWidget {
+  @override
+  _EmailSignUpState createState() => _EmailSignUpState();
+}
+
+class _EmailSignUpState extends State<EmailSignUp> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    final rpo = Provider.of<SignUpModel>(context,listen: false);
+    rpo.getToken();
+  }
   @override
   Widget build(BuildContext context) {
     var _error;
@@ -151,8 +165,7 @@ class EmailSignUp extends StatelessWidget {
                                   : "Already have an account?"),
                               FlatButton(
                                 onPressed: () {
-                                  providerEmailModel.getStoredEmail();
-                                  providerEmailModel.getStoredId();
+
                                   providerEmailModel.changeIntoSignup();
                                 },
                                 child:
@@ -166,7 +179,7 @@ class EmailSignUp extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

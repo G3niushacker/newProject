@@ -59,9 +59,9 @@ class ResturantCard extends StatelessWidget {
             ),
             Row(
               children: [
-                Text("Sr $minRate minimum ", style: kLastResturantTextStyle),
+                Text("SAR $minRate minimum ", style: kLastResturantTextStyle),
                 Text(
-                  ": SR $deleveryFee Delivery fee",
+                  ": SAR $deleveryFee Delivery fee",
                   style: kLastResturantTextStyle,
                 )
               ],

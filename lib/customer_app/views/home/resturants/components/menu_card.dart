@@ -53,12 +53,19 @@ class MenuCardComponent extends StatelessWidget {
     return InkWell(
       onTap: (){
         print(item.itemName);
-        pr.addToCart(item.itemName, item.itemDescription, item.itemPrice, item.itemImage);
+        pr.addToCart(item.itemName, item.itemDescription, item.itemPrice, item.itemImage,item.resturantId);
       },
       child: ListTile(
-        leading: Image.network("https://tripps.live/tripp_food/${item.itemImage}"),
+        leading: Container(
+          height: 80,
+            width: 80,
+            child: Card(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.network("https://tripps.live/tripp_food/${item.itemImage}",fit: BoxFit.fill,),
+            ))),
         title: Text(item.itemName),
         subtitle: Text(item.itemDescription),
+        trailing: Text("${item.itemPrice} SAR"),
       ),
     );
   }

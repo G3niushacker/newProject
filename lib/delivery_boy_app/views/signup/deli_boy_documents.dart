@@ -4,11 +4,15 @@ import 'package:food_delivery_app/delivery_boy_app/models/signup_model.dart';
 import 'package:food_delivery_app/resturant_app/views/signup/components/general_detail_card.dart';
 import 'package:food_delivery_app/resturant_app/views/signup/components/general_information_card_contnet.dart';
 import 'package:provider/provider.dart';
+import 'package:food_delivery_app/routes/routes_names.dart';
+import 'package:food_delivery_app/models/sign_up_model.dart';
+
 
 class DeliBoyDocuments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<DeliSignUpModel>(context);
+    final signPro = Provider.of<SignUpModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Your Documents"),
@@ -113,8 +117,9 @@ class DeliBoyDocuments extends StatelessWidget {
               color: kThemeColor,
               minWidth: MediaQuery.of(context).size.width,
               onPressed: (){
-                provider.uploadDeliBoyInfo();
-                // Navigator.pushNamed(context, deliDocuments);
+                signPro.getStoredId();
+                signPro.getStoredEmail();
+                Navigator.pushNamed(context, deliBoyInfo);
               },
               child: Text("Next",
                 style: TextStyle(color: Colors.white),),

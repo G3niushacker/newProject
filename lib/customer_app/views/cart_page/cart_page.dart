@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/customer_app/model/resturant/resturants_providers.dart';
 import 'package:food_delivery_app/customer_app/views/cart_page/components/cart_item.dart';
@@ -6,7 +5,27 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:food_delivery_app/constants.dart';
 import 'package:provider/provider.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
+  @override
+  _CartPageState createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+
+  void getTotal(BuildContext context) async{
+    final pro = Provider.of<NearResturantsProvider>(context,listen: false);
+    await Future.delayed(Duration(seconds: 3));
+    pro.total();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final pro = Provider.of<NearResturantsProvider>(context,listen: false);
+    // pro.check();
+    pro.getUserIdEmail();
+    // getTotal(context);
+  }
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<NearResturantsProvider>(context);
@@ -29,7 +48,10 @@ class CartPage extends StatelessWidget {
             children: [
               Text("My Cart",style: TextStyle(fontSize: 18),),
               SizedBox(height: 10,),
-              ListView.builder(
+              ListView.separated(
+                separatorBuilder: (ctx,i){
+                  return Divider();
+                },
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: provider.cartItems.length,
@@ -140,9 +162,11 @@ class CartPage extends StatelessWidget {
                 color: kThemeColor,
                 minWidth: MediaQuery.of(context).size.width,
                 onPressed: (){
+                  provider.sendOrder();
                   // Navigator.pushNamed(context, deliDocuments);
+
                 },
-                child: Text("Next",
+                child: Text("Place Order",
                   style: TextStyle(color: Colors.white),),
               )
             ],

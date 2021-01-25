@@ -1,9 +1,4 @@
 import 'dart:io';
-import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/constants.dart';
 import 'package:food_delivery_app/resturant_app/views/home/resturant_home.dart';
@@ -15,28 +10,22 @@ class ResturantProfile extends StatefulWidget {
 }
 
 class _ResturantProfileState extends State<ResturantProfile> {
-  FirebaseAuth auth = FirebaseAuth.instance;
-  var user;
-  void checkUserId() {
-    var firebaseUser = auth.currentUser.uid;
-    setState(() {
-      user = firebaseUser;
-      print("at profile page user id got $user");
-    });
-  }
+  // FirebaseAuth auth = FirebaseAuth.instance;
+  // var user;
+  // void checkUserId() {
+  //   var firebaseUser = auth.currentUser.uid;
+  //   setState(() {
+  //     user = firebaseUser;
+  //     print("at profile page user id got $user");
+  //   });
+  // }
 
   String resturantName;
   String description;
   String startFrom;
   String deliveryFee;
   File resturantImage;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  Future resturantImagePicking() async {
-    var sampleImage = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      resturantImage = sampleImage;
-    });
-  }
+
 
   Widget showResturantImage() {
     if (resturantImage != null) {
@@ -176,7 +165,7 @@ class _ResturantProfileState extends State<ResturantProfile> {
                       ? IconButton(
                           icon: Icon(Icons.camera_alt),
                           onPressed: () {
-                            resturantImagePicking();
+
                           },
                         )
                       : showResturantImage(),

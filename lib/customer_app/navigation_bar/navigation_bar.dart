@@ -29,12 +29,15 @@ class _NavigationBarState extends State<NavigationBar> {
     final pro = Provider.of<NearResturantsProvider>(context,listen: false);
     pro.lat = position.latitude;
     pro.lon = position.longitude;
+    await Future.delayed(Duration(seconds: 3),(){
+      Provider.of<ProfileProvider>(context,listen: false).fetchUserProfile();
+    });
   }
   @override
-  void initState() {
+  void initState(){
     super.initState();
     getLocation();
-    Provider.of<ProfileProvider>(context,listen: false).fetchUserProfile();
+    Provider.of<ProfileProvider>(context,listen: false).getIdEmail();
   }
 
   @override

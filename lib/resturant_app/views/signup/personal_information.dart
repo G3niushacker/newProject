@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/constants.dart';
-import 'package:food_delivery_app/resturant_app/views/home/resturant_home.dart';
 import 'package:food_delivery_app/resturant_app/views/signup/components/personal_inputs.dart';
 import 'package:food_delivery_app/resturant_app/views/signup/components/personal_radio_buttons.dart';
 import 'package:food_delivery_app/resturant_app/views/signup/components/personal_sceent_dropdown.dart';
 import 'package:provider/provider.dart';
 import 'package:food_delivery_app/resturant_app/model/resturant_profile_provider.dart';
+import 'package:food_delivery_app/routes/routes_names.dart';
+
 
 class ResturantPersonalInfo extends StatelessWidget {
   @override
@@ -199,6 +200,7 @@ class ResturantPersonalInfo extends StatelessWidget {
                   onPressed: () {
                     print(provider.lastName);
                     provider.uploadResturantInfo(context);
+                    Navigator.pushNamed(context, resturantHome);
                   },
                   child: Text(
                     "Submit Form",

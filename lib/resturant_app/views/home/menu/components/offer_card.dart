@@ -43,6 +43,7 @@ class OfferCard extends StatelessWidget {
               ],
             ),
             ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
               itemCount: children != null && children.length > 0 ? children.length : 0,
               shrinkWrap: true,
               itemBuilder: (context, index) {

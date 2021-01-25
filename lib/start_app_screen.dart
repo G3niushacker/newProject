@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_walkthrough/flutter_walkthrough.dart';
 import 'package:flutter_walkthrough/walkthrough.dart';
@@ -35,17 +34,6 @@ class _StartAppScreenState extends State<StartAppScreen> {
       imageIcon: Icons.verified_user,
     ),
   ];
-  var userr;
-  FirebaseAuth auth = FirebaseAuth.instance;
-  checkUser() async {
-    final user = auth.currentUser;
-    if (user != null) {
-      setState(() {
-        userr = user.uid;
-        print("new user is here $userr");
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

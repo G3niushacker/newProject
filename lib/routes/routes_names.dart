@@ -46,3 +46,4 @@ const String deliBoyInfo = 'deli_info';
 const String deliHome = 'deli_home';
 const String deliDocuments = 'deli_documents';
 const String deliMapScreen = 'deli_map_screen';
+const String deliBoyDoc = 'deli_boy_doc';

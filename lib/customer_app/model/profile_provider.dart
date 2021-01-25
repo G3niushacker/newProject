@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import '../../constants.dart';
 import 'package:food_delivery_app/routes/routes_names.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class ProfileProvider extends ChangeNotifier {
   bool isSave = false;
   File image;
@@ -16,6 +16,8 @@ class ProfileProvider extends ChangeNotifier {
   String phone;
   String address;
   String email;
+  String userid;
+  String storedEmail;
 
 
   //Picking image
@@ -61,7 +63,7 @@ class ProfileProvider extends ChangeNotifier {
     String url = "${kServerUrlName}profile.php";
    var request = await http.MultipartRequest('POST',Uri.parse(url));
    var imagee = await http.MultipartFile.fromPath('img', image.path);
-   request.fields['login_id'] = '20';
+   request.fields['login_id'] = userid;
    request.fields['name'] = name;
    request.fields['email'] = email;
    request.fields['phone'] = phone;
@@ -76,10 +78,17 @@ class ProfileProvider extends ChangeNotifier {
   dynamic displayAddress;
   dynamic diaplayImage;
 
+  void getIdEmail() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    userid = preferences.getString('id');
+    storedEmail = preferences.getString('email');
+    print(userid);
+  }
+
   void fetchUserProfile() async {
     String url = "${kServerUrlName}fetch_userprofile.php";
     http.Response response = await http.post(url,body: ({
-      'id': '20',
+      'id': userid,
     }));
     var decode = json.decode(response.body);
     print(decode);

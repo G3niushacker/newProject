@@ -5,6 +5,7 @@ import 'package:food_delivery_app/constants.dart';
 import 'package:food_delivery_app/localization/demo_localization.dart';
 import 'package:food_delivery_app/routes/custom_routes.dart';
 import 'package:food_delivery_app/routes/routes_names.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:food_delivery_app/customer_app/model/navigation_bar_provider.dart';
 import 'package:food_delivery_app/customer_app/model/profile_provider.dart';
@@ -19,13 +20,20 @@ import 'package:food_delivery_app/customer_app/model/resturant/resturants_provid
 import 'package:food_delivery_app/delivery_boy_app/models/signup_model.dart';
 import 'package:food_delivery_app/delivery_boy_app/models/deli_map_model.dart';
 
-
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  OneSignal.shared.init('3d385690-40a4-4a57-b1db-6b60b7698daf');
+  OneSignal.shared
+      .setInFocusDisplayType(OSNotificationDisplayType.notification);
+  await OneSignal.shared
+      .promptUserForPushNotificationPermission(fallbackToSettings: true);
+  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   runApp(
     MyApp(),
   );
+
 }
 
 class MyApp extends StatefulWidget {
@@ -128,7 +136,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         onGenerateRoute: CustomRoutes.allRoutes,
-        initialRoute: navigationBar,
+        initialRoute: startAppScreen,
       ),
     );
   }

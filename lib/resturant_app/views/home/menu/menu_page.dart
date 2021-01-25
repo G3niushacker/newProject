@@ -27,6 +27,7 @@ class MenuPage extends StatelessWidget {
         child: Column(
           children: [
             ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount:
                   provider.cardList != null && provider.cardList.length > 0

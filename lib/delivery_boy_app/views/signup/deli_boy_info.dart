@@ -11,7 +11,6 @@ import 'package:food_delivery_app/delivery_boy_app/views/signup/components/drop_
 class DeliBoyInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     final prov = Provider.of<DeliSignUpModel>(context);
     return Scaffold(
       appBar: AppBar(
@@ -211,7 +210,8 @@ class DeliBoyInfo extends StatelessWidget {
                   color: kThemeColor,
                   minWidth: MediaQuery.of(context).size.width,
                   onPressed: (){
-                    Navigator.pushNamed(context, deliDocuments);
+                    prov.uploadDeliBoyInfo(context);
+                    Navigator.pushNamed(context, deliHome);
                   },
                   child: Text("Next",
                     style: TextStyle(color: Colors.white),),

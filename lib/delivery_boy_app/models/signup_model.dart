@@ -8,6 +8,8 @@ import 'package:hijri/hijri_calendar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'package:food_delivery_app/models/sign_up_model.dart';
 
 class DeliSignUpModel extends ChangeNotifier{
 
@@ -230,7 +232,8 @@ class DeliSignUpModel extends ChangeNotifier{
   }
 
 
-  void uploadDeliBoyInfo() async {
+  void uploadDeliBoyInfo(context) async {
+    final prov = Provider.of<SignUpModel>(context,listen: false);
     String url = '${kServerUrlName}delivery_boy_info.php';
     var request = http.MultipartRequest('POST',Uri.parse(url));
 
@@ -240,7 +243,7 @@ class DeliSignUpModel extends ChangeNotifier{
     var idBackk = await http.MultipartFile.fromPath('id_back', idBack.path);
     var vahicleDoc = await http.MultipartFile.fromPath('vehicle_doc', vahicleDocom.path);
 
-    request.fields['login_id'] = '20';
+    request.fields['login_id'] = prov.id;
     request.fields['first_name'] = firstName;
     request.fields['family_name'] = familyName;
     request.fields['phone_number'] = phone;

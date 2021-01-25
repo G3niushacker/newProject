@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/customer_app/navigation_bar/navigation_bar.dart';
 import 'package:food_delivery_app/start_app_screen.dart';
@@ -12,16 +11,16 @@ class _ConditionScreenState extends State<ConditionScreen> {
   @override
   void initState() {
     super.initState();
-    FirebaseAuth auth = FirebaseAuth.instance;
-    var user = auth.currentUser.uid;
-    print(user);
-    if (user != null) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => NavigationBar()));
-    } else {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => StartAppScreen()));
-    }
+
+
+    // print(user);
+    // if (user != null) {
+    //   Navigator.pushReplacement(
+    //       context, MaterialPageRoute(builder: (context) => NavigationBar()));
+    // } else {
+    //   Navigator.pushReplacement(
+    //       context, MaterialPageRoute(builder: (context) => StartAppScreen()));
+    // }
   }
 
   @override

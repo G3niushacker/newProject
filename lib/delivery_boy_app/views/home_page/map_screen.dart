@@ -13,17 +13,8 @@ class DeliMapScreen extends StatefulWidget {
 
 class _DeliMapScreenState extends State<DeliMapScreen> {
 
-  static Set<Marker> marker = {};
-
   Completer<GoogleMapController> completer = Completer();
-  static LatLng latLng;
-  void getLatLong(BuildContext context){
-    final prov = Provider.of<DeliMapModel>(context,listen: false);
-    print(latLng.longitude);
-    setState(() {
-      latLng =  LatLng(prov.getlat,prov.getlon);
-    });
-  }
+  static LatLng latLng = LatLng(24.832234,67.062513);
 
   LatLng initPostition = latLng;
 
@@ -31,32 +22,42 @@ class _DeliMapScreenState extends State<DeliMapScreen> {
     initPostition = position.target;
   }
   onMapCreated (GoogleMapController controller) {
+    final prov = Provider.of<DeliMapModel>(context,listen: false);
     completer.complete(controller);
-  }
-  addmarker() {
-    setState(() {
-      marker.add(Marker(
-          markerId: MarkerId(
-            initPostition.toString(),
-          ),
-          position: initPostition,
-          infoWindow: InfoWindow(title: "Your Location")));
-    });
+    prov.getUserLatMarker(controller);
+
   }
   @override
   void initState() {
     super.initState();
-    getLatLong(context);
-    print(latLng);
-    addmarker();
   }
 
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<DeliMapModel>(context);
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
         title: Text("Waiting for Order"),
+        actions: [
+          InkWell(
+            onTap: (){
+              Navigator.pop(context);
+              prov.putDeliBoyOnline(context,1);
+            },
+            child: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                image: DecorationImage(
+                  image: AssetImage('images/shutdown.png')
+                )
+              ),
+            ),
+          )
+        ],
       ),
       body: latLng.longitude == null ?
           Center(child: CircularProgressIndicator(),):
@@ -64,27 +65,12 @@ class _DeliMapScreenState extends State<DeliMapScreen> {
         children: [
           GoogleMap(
             initialCameraPosition:
-            CameraPosition(target: initPostition, zoom: 11.0),
-            markers: marker,
+            CameraPosition(target: latLng, zoom: 11.0),
+            markers: prov.markers,
             onCameraMove: onCameraMove,
             onMapCreated: onMapCreated,
             mapType: MapType.normal,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: MaterialButton(
-                height: 40,
-                minWidth: MediaQuery.of(context).size.width,
-                color: kThemeColor,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("Good Bye"),
-              ),
-            ),
-          )
         ],
       ),
     );

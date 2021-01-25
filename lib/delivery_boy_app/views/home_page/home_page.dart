@@ -6,6 +6,8 @@ import 'package:food_delivery_app/routes/routes_names.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:food_delivery_app/delivery_boy_app/models/deli_map_model.dart';
+import 'package:food_delivery_app/models/sign_up_model.dart';
+import 'package:food_delivery_app/delivery_boy_app/models/deli_map_model.dart';
 
 final topCardsubhead = TextStyle(color: Colors.grey[700], fontSize: 20);
 final topCardHead = TextStyle(color: Colors.black, fontSize: 25);
@@ -31,9 +33,16 @@ class _DeliveryBoyHomePageState extends State<DeliveryBoyHomePage> {
   void initState() {
     super.initState();
     getLatLong(context);
+    final provider = Provider.of<SignUpModel>(context, listen: false);
+    provider.getStoredEmail();
+    provider.getStoredId();
+    print(provider.storedEmail);
+    print(provider.id);
   }
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<DeliMapModel>(context, listen: false);
+    final signPro = Provider.of<SignUpModel>(context);
     final textThem = Theme.of(context).textTheme;
     return Scaffold(
       drawer: Drawer(
@@ -173,6 +182,9 @@ class _DeliveryBoyHomePageState extends State<DeliveryBoyHomePage> {
               ),
               child: MaterialButton(
                 onPressed: () {
+                  print(signPro.storedEmail);
+                  print(signPro.id);
+                  provider.putDeliBoyOnline(context,1);
                   Navigator.pushNamed(context, deliMapScreen);
                 },
                 child: Text("Start",style: TextStyle(color: Colors.black),),

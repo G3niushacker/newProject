@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:food_delivery_app/constants.dart';
+import 'package:food_delivery_app/customer_app/model/resturant/cart_model.dart';
 import 'package:food_delivery_app/resturant_app/model/menu_card_item_model.dart';
 import 'package:food_delivery_app/resturant_app/model/menu_card_model.dart';
 import 'package:food_delivery_app/resturant_app/model/menu_list.dart';
@@ -8,6 +9,8 @@ import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:food_delivery_app/customer_app/model/resturant/resturant_list.dart';
 import 'package:food_delivery_app/customer_app/model/resturant/resturants_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'cart_list_model.dart';
 
 class NearResturantsProvider extends ChangeNotifier{
   double lat;
@@ -15,10 +18,21 @@ class NearResturantsProvider extends ChangeNotifier{
   dynamic cardID;
   dynamic resturantId;
 
+  dynamic getedResturantId;
+
   dynamic resturantName;
   dynamic resturantImage;
   dynamic resturantDeliPrice;
+  dynamic userId;
+  dynamic storedEmail;
 
+  CartModel cartModel = CartModel();
+
+  void getUserIdEmail()async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    userId = preferences.getString('id');
+    storedEmail = preferences.getString('email');
+  }
 
 
   List<MenuCardItemsModel> lstItems;
@@ -97,6 +111,7 @@ class NearResturantsProvider extends ChangeNotifier{
     }
     notifyListeners();
     print(decodee);
+    print(resturantId);
   }
 
 
@@ -110,35 +125,78 @@ class NearResturantsProvider extends ChangeNotifier{
       resturantName = decode['data'][0]['b_name'];
       resturantImage = decode['data'][0]['resutrant_selfie'];
       resturantDeliPrice = decode['data'][0]['deli_price'];
+      getedResturantId = decode['data'][0]['deli_price'];
     }
+    print(decode);
+    print(getedResturantId);
     notifyListeners();
   }
 
   List<MenuCardItemsModel> cartItems = [];
 
-  var elements = ["a", "b", "c", "d", "e", "a", "b", "c", "f", "g", "h", "h", "h", "e"];
+  List<CartListModel> cartOrderList = [];
+
+  List<MenuCardItemsModel> cartex = [
+    MenuCardItemsModel(
+        itemPrice: 12
+        ),
+    MenuCardItemsModel(
+        itemPrice: 20
+    ),
+    MenuCardItemsModel(
+        itemPrice: 40
+    ),
+    MenuCardItemsModel(
+        itemPrice: 12
+    ),
+  ];
+
+  var sum;
+  void total() {
+     cartex.fold(0.0, (double currentTotal, MenuCardItemsModel nextProduct) {
+      sum = currentTotal + nextProduct.itemPrice;
+    });
+     print(sum);
+    notifyListeners();
+  }
+ void getTotalPrice(){
+    cartItems.forEach((element) {
+      var num = sum + element.itemPrice;
+      sum = int.parse(num);
+    });
+    print(sum);
+   notifyListeners();
+ }
+
   var map = Map();
 
-
+  // List<> em = [];
   void check(){
     cartItems.forEach((element) {
       if(!map.containsKey(element)){
-        map[element] = 1;
+        map[element] = map[element];
       }else{
         map[element] +=1;
       }
-      print(map);
+      print(map[element]);
     });
   }
 
-  void addToCart(dynamic itmName, dynamic itmDesc, dynamic itmPrice,dynamic itmImage){
+  void addToCart(dynamic itmName, dynamic itmDesc, int itmPrice,dynamic itmImage,restID){
     cartItems.add(
         MenuCardItemsModel(
           itemPrice: itmPrice,
           itemName: itmName,
           itemImage: itmImage,
           itemDescription: itmDesc,
+          resturantId: restID,
     ));
+    cartOrderList.add(
+      CartListModel(
+        itemName: itmName,
+        itemPrice: itmPrice,
+      )
+    );
     notifyListeners();
   }
 
@@ -153,6 +211,21 @@ class NearResturantsProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-
-
+  void sendOrder()async{
+    String url = "${kServerUrlName}notification/notification/sendSinglePush.php";
+    http.Response response = await http.post(
+      url,
+      // headers: {"Content-type":"application/json"},
+      body: ({
+        'item': 'json.encode(cartModel.toJson())',
+        'customer_id' : userId,
+        'resturant_id': getedResturantId,
+        'price': '200',
+      })
+    );
+    // var decode = json.decode(response.body);
+    // print(decode);
+    print(response.statusCode);
+    notifyListeners();
+  }
 }

@@ -8,14 +8,36 @@ import 'package:food_delivery_app/constants.dart';
 import 'package:food_delivery_app/common_screens/sign_up_role.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class SignUpModel extends ChangeNotifier {
+
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+
+  String token;
+
+  void getToken(){
+    firebaseMessaging.getToken().then((value) {
+      token = value;
+      print(value);
+    });
+  }
+
+  void sendToken()async{
+    String url = "${kServerUrlName}notification/notification/RegisterDevice.php";
+    http.Response response = await http.post(url,body: ({
+      'token': token,
+      'email': email,
+    }));
+  }
+
   bool isSignUp = true;
   bool isLoading = false;
   bool isCodeSent = false;
   String email;
   String password;
   dynamic id;
+  String storedEmail;
   String code;
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   var _verificationId;
@@ -170,6 +192,7 @@ class SignUpModel extends ChangeNotifier {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => VerifyEmail()));
       storeValInSharedPref();
+      sendToken();
     }
   }
 
@@ -192,15 +215,12 @@ class SignUpModel extends ChangeNotifier {
   }
    getStoredEmail() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var em = preferences.getString('email');
-    print(em);
-    return em;
+    storedEmail = preferences.getString('email');
+
   }
   getStoredId() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var id = preferences.getString('id');
-    print(id);
-    return id;
+    id = preferences.getString('id');
   }
 
   verifyEmail(BuildContext context) async {

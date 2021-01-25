@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:food_delivery_app/customer_app/model/profile_provider.dart';
+import 'package:food_delivery_app/routes/routes_names.dart';
 
 GlobalKey<FormState> _key = GlobalKey<FormState>();
 
@@ -108,6 +109,7 @@ class CreateProfile extends StatelessWidget {
                                 _key.currentState.save();
                                   profileProvider.isSaveForCircularProgressIntoTrue();
                                   profileProvider.uploadUserProfileInfo(context);
+                                  Navigator.pushNamed(context, navigationBar);
                               }
                             },
                             child: Text(

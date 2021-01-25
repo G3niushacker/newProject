@@ -77,7 +77,7 @@ class SignUpWelcome extends StatelessWidget {
                       style: TextStyle(fontSize: 18),
                     ),
                     WelcomeButtons(
-                      title: "Continue with Phone",
+                      title: "Continue w ith Phone",
                       onTap: () {
                         Navigator.pushNamed(context, phoneSignUp);
                       },
@@ -91,7 +91,7 @@ class SignUpWelcome extends StatelessWidget {
                         icon: Icons.email),
                     SizedBox(
                       height: 10,
-                    )
+                    ),
                   ],
                 ),
               ),

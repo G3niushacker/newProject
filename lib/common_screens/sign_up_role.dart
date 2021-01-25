@@ -50,6 +50,7 @@ class SignRole extends StatelessWidget {
                 image: "images/deliveryBoy.png",
                 onTap: () {
                   pro.roleUpdate(3);
+                  Navigator.pushReplacementNamed(context, deliDocuments);
                 },
               ),
             ],

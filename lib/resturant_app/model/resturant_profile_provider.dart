@@ -300,7 +300,7 @@ class ResturantProfileProvider extends ChangeNotifier{
   void fetchResturantProfile() async {
     String url = "${kServerUrlName}fetch_resturant_profile.php";
     http.Response response = await http.post(url,body: ({
-      'resturant_id': '12'
+      'resturant_id': '9'
     }));
     var decode = jsonDecode(response.body);
     if(response.statusCode == 200){

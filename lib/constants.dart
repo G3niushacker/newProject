@@ -29,4 +29,4 @@ const kAppBarTitle = TextStyle(color: Colors.black);
 const textstyl = TextStyle(fontSize: 18.0, color: Color(0xff000000));
 
 const TextStyle kEmailError = TextStyle(color: Colors.red);
-PinDecoration kPinDecoration = UnderlineDecoration( hintText: '000000',colorBuilder: PinListenColorBuilder(Colors.cyan, Colors.green) );
+PinDecoration kPinDecoration = UnderlineDecoration( hintText: '000000',colorBuilder: PinListenColorBuilder(Colors.cyan, Colors.green));
